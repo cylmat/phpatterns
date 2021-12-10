@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Patterns;
+namespace Patterns\Creational;
 
 interface VehicleBuilderInterface
 {
