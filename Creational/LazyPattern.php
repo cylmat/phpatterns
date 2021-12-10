@@ -1,5 +1,7 @@
 <?php
 
+namespace Phpatterns\Creational;
+
 interface Sql { function init(); function id(int $id):string; }
 
 class Mysql implements Sql {
