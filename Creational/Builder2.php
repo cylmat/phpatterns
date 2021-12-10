@@ -22,7 +22,7 @@ interface DirectorInterface
     public function build(BuilderInterface $builder): Computer;
 }
 
-class Computer implements \Stringable
+class Computer
 {
     /** @var string */
     protected $keyboard, $mouse, $storages = [];
