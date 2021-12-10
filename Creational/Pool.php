@@ -1,24 +1,14 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Patterns;
+namespace Phpatterns\Creational;
 
-$r = 5;
-
-
-/**
- * WorkerPool
- */
 class WorkerPool implements \Countable
 {
     private $occupied=[];
     private $free=[];
 
-    /**
-     * Constructor method
-     */
     public function __construct() 
     {
-
     }
 
     
