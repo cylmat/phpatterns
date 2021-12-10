@@ -10,74 +10,61 @@ namespace Phpatterns\Creational;
  *      disk,usb,sd
  */
 
-class Computer
+interface BuilderInterface
 {
-    protected $keyboard, $mouse, $storages=[];
-    function setKeyboard(bool $type=true)
-    {
-        $this->keyboard = $type ? 'azerty' : 'qwerty';
-    }
-    
-    function setMouse(bool $type=true)
-    {
-        $this->mouse = $type ? 'classic' : 'adaptatic';
-    }
-    
-    function addStorage(string $type='disk')
-    {
-        $this->storages[] = $type; //usb, sd
-    }
-    
-    function __toString() { return sprintf("My %s and %s -%s- computer", $this->keyboard, $this->mouse, join(',',$this->storages)); }
+    public function addKeyboard(): void;
+    public function addMouse(): void;
+    public function addStorage(string $type): void;
 }
 
-interface IBuilder
+interface DirectorInterface
 {
-    function addKeyboard(): void;
-    function addMouse(): void;
-    function addStorage($type): void;
+    public function build(BuilderInterface $builder): Computer;
 }
 
-class ClassicBuilder implements IBuilder
+class Computer implements \Stringable
 {
+    /** @var string */
+    protected $keyboard, $mouse, $storages = [];
+
+    public function setKeyboard(bool $type = true) { $this->keyboard = $type ? 'azerty' : 'qwerty'; }
+    
+    public function setMouse() { $this->mouse = 'classic'; }
+    
+    public function addStorage(string $type = 'disk') { $this->storages[] = $type; } //usb, sd
+    
+    public function __toString() { return sprintf("%s, %s and -%s- computer", $this->keyboard, $this->mouse, join(',', $this->storages)); }
+}
+
+class ClassicBuilder implements BuilderInterface
+{
+    /** @var Computer */
     public $computer;
-    public function __construct(Computer $computer)
-    {
-        $this->computer = $computer;
-    }
+
+    public function __construct(Computer $computer) { $this->computer = $computer; }
     
-    function addKeyboard(): void
-    {
-        $this->computer->setKeyboard(true);
-    }
+    public function addKeyboard(): void { $this->computer->setKeyboard(true); }
     
-    function addMouse(): void
-    {
-        $this->computer->setMouse(true);
-    }
+    public function addMouse(): void { $this->computer->setMouse(); }
     
-    function addStorage($type): void
-    {
-        $this->computer->addStorage($type);
-    }
+    public function addStorage(string $type): void { $this->computer->addStorage($type); }
 }
 
-interface IDirector
+class MultipleStorageDirector implements DirectorInterface
 {
-    function build(IBuilder $builder): Computer;
-}
-
-class MultipleStorageDirector implements IDirector
-{
-    function build(IBuilder $builder): Computer
+    public function __construct() { return $this; }
+    
+    public function build(BuilderInterface $builder): Computer
     {
         $builder->addKeyboard();
         $builder->addMouse();
         $builder->addStorage('disk');
         $builder->addStorage('disk');
         $builder->addStorage('usb');
+
         return $builder->computer;
     }
 }
 
-echo (new MultipleStorageDirector)->build(new ClassicBuilder(new Computer));
+$computer = (string)(new MultipleStorageDirector())->build(new ClassicBuilder(new Computer()));
+return false !== strpos($computer, 'disk');
