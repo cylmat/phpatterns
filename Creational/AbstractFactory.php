@@ -6,10 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Patterns;
-
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+namespace Phpatterns\Creational;
 
 interface Parser
 {
