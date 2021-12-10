@@ -1,5 +1,6 @@
 <?php
-// Your code here!
+
+namespace Phpatterns\Creational;
 
 /**
  * computer:portable,desk,station
