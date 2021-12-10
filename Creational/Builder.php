@@ -4,11 +4,11 @@ namespace Phpatterns\Creational;
 
 interface VehicleBuilderInterface
 {
-    function createVehicle();
-    function addWheel();
-    function addEngine();
-    function addDoor();
-    function getVehicle(): Vehicle;
+    public function createVehicle(): void;
+    public function getVehicle(): Vehicle;
+    public function addWheel(): void;
+    public function addEngine(): void;
+    public function addDoor(): void;
 }
 
 abstract class Vehicle
@@ -18,11 +18,11 @@ abstract class Vehicle
     /** @var Part[] */
     private $parts = [];
     
-    function getType(): string { return $this->type; }
+    public function getType(): string { return $this->type; }
     
-    function setPart(string $key, string $val) { $this->parts[$key] = $val; }
+    public function setPart(string $key, string $val) { $this->parts[$key] = $val; }
     
-    function getPart($key): string { return $this->parts[$key]; }
+    public function getPart($key): string { return $this->parts[$key]; }
 }
 
 abstract class Part
@@ -58,6 +58,33 @@ class Door extends Part
     protected $type = 'door';
 }
 
+class CarBuilder implements VehicleBuilderInterface
+{
+    /** @var Vehicle */
+    private $car;
+    
+    public function createVehicle(): void { $this->car = new Car(); }
+    
+    public function getVehicle(): Vehicle { return $this->car; }    
+    
+    public function addWheel(): void
+    {
+        $this->car->setPart('right_wheel', new Wheel);
+        $this->car->setPart('left_wheel', new Wheel);
+    }
+    
+    public function addEngine(): void
+    {
+        $this->car->setPart('engine', new Engine);
+    }
+    
+    public function addDoor(): void
+    {
+        $this->car->setPart('right_door', new Door);
+        $this->car->setPart('left_door', new Door);
+    }
+}
+
 class Director
 {
     static function buildVehicle(VehicleBuilderInterface $builder): Vehicle
@@ -65,34 +92,12 @@ class Director
         $builder->createVehicle();
         $builder->addWheel();
         $builder->addEngine();
+
         return $builder->getVehicle();
     }
 }
 
-class CarBuilder implements VehicleBuilderInterface
-{
-    /** @var Vehicle */
-    private $car;
+// main
+$vehicle = Director::buildVehicle(new CarBuilder());
+echo (int)$vehicle->getPart('right_door')->getType() === 'door';
     
-    public function createVehicle() { $this->car = new Car(); }
-    
-    public function getVehicle(): Vehicle { return $this->car; }    
-    
-    function addWheel(): void
-    {
-        $this->car->setPart('right_wheel', new Wheel);
-        $this->car->setPart('left_wheel', new Wheel);
-    }
-    
-    function addEngine(): void
-    {
-        $this->car->setPart('engine', new Engine);
-    }
-    
-    function addDoor(): void
-    {
-        $this->car->setPart('right_door', new Door);
-        $this->car->setPart('left_door', new Door);
-    }
-}
-
