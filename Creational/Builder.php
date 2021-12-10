@@ -20,7 +20,7 @@ abstract class Vehicle
     
     public function getType(): string { return $this->type; }
     
-    public function setPart(string $key, string $val) { $this->parts[$key] = $val; }
+    public function setPart(string $key, Part $part) { $this->parts[$key] = $part; }
     
     public function getPart($key): string { return $this->parts[$key]; }
 }
