@@ -35,4 +35,4 @@ jobs:
         php-version: "7.3"
 
     - name: Run tests
-      run: tests.php
+      run: php ./tests.php
