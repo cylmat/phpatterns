@@ -5,6 +5,7 @@ foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__)) 
          continue;    
      }
      echo $file->getRealpath();
-     1 === (include_once $file->getRealpath()) ? die(' ... ') : echo " ......... \t [OK] ";
+     if (1 === (include_once $file->getRealpath())) die(' ... ');
+     else echo " ......... \t [OK] ";
      echo PHP_EOL;
 }
