@@ -99,5 +99,5 @@ class Director
 
 // main
 $vehicle = Director::buildVehicle(new CarBuilder());
-echo (int)$vehicle->getPart('right_door')->getType() === 'door';
+return $vehicle->getPart('right_door')->getType() === 'door';
     
