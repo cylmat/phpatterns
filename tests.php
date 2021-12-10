@@ -6,6 +6,6 @@ foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__)) 
      }
      echo 
          $file->getRealpath(),
-         1 === (include $file->getRealpath()) ? ' ... ' : " ......... \t\t\t [OK] ",
+         1 === (include $file->getRealpath()) ? ' ... ' : " ......... \t [OK] ",
          PHP_EOL;
 }
