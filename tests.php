@@ -4,8 +4,7 @@ foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__)) 
      if ('php' !== $file->getExtension()) {
          continue;    
      }
-     echo 
-         $file->getRealpath(),
-         1 === (include_once $file->getRealpath()) ? ' ... ' : " ......... \t [OK] ",
-         PHP_EOL;
+     echo $file->getRealpath();
+     1 === (include_once $file->getRealpath()) ? die(' ... ') : echo " ......... \t [OK] ";
+     echo PHP_EOL;
 }
