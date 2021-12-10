@@ -1,21 +1,12 @@
 <?php 
-/**
- * Factory Method Implementation
- */ 
 
-namespace Patterns;
+namespace Phpatterns\Creational;
 
-/**
- * Interface Logger 
- */
 interface Logger
 {
     public function Log(string $message);
 }
 
-/**
- * FileLogger
- */
 class FileLogger implements Logger
 {
     private $filePath;
@@ -39,9 +30,6 @@ class StdoutLogger implements Logger
     }
 }
 
-/**
- * Interface FactoryMethod
- */
 interface LoggerFactory
 {
     public function createLogger();
