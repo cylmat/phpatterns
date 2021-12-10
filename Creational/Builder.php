@@ -22,7 +22,7 @@ abstract class Vehicle
     
     public function setPart(string $key, Part $part) { $this->parts[$key] = $part; }
     
-    public function getPart($key): string { return $this->parts[$key]; }
+    public function getPart($key): Part { return $this->parts[$key]; }
 }
 
 abstract class Part
