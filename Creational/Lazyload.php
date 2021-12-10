@@ -1,9 +1,11 @@
 <?php
+
+namespace Phpatterns\Creational;
+
 /*
 http://www.informatix.fr/articles/php/le-lazy-load-en-php-143
-CLOSURE
 */
-class Client
+class Lazyload
 {
         protected $commandes = null;
         protected $prenom = null;
@@ -15,8 +17,8 @@ class Client
                 /* L'attribut commandes utilise le lazy load car son initialisation est une operation lourde */
                 $this->commandes = function ()
                 {
-                        $model = new ClientModel();
-                        return $model->getToutesLesCommandes();
+                        $model = new class() { function getCommands(){} };
+                        return $model->getCommands();
                 };
         }
 
