@@ -19,36 +19,24 @@ interface VehicleBuilderInterface
 
 abstract class Vehicle
 {
-    /**
-     * @var Part[]
-     */
-    private $part = [];
-    
+    /** @var string */
     protected $type;
+    /** @var Part[] */
+    private $parts = [];
     
-    function getType()
-    {
-        return $this->type; 
-    }
+    function getType(): string { return $this->type; }
     
-    function setPart($key, $val)
-    {
-        $this->part[$key] = $val;
-    }
+    function setPart(string $key, string $val) { $this->parts[$key] = $val; }
     
-    function getPart($key)
-    {
-        return $this->part[$key];
-    }
+    function getPart($key): string { return $this->parts[$key]; }
 }
 
 abstract class Part
 {
+    /** @var string */
     protected $type;
-    function getType()
-    {
-        return $this->type; 
-    }
+
+    function getType(): string { return $this->type; }
 }
 
 class Car extends Vehicle
@@ -68,16 +56,13 @@ class Wheel extends Part
 
 class Engine extends Part
 {
-    protected $type='engine';
+    protected $type = 'engine';
 }
 
 class Door extends Part
 {
-    protected $type='door';
+    protected $type = 'door';
 }
-
-
-/******/
 
 class Director
 {
@@ -92,32 +77,28 @@ class Director
 
 class CarBuilder implements VehicleBuilderInterface
 {
+    /** @var Vehicle */
     private $car;
     
-    function createVehicle()
-    {
-        $this->car = new Car();
-    }
+    public function createVehicle() { $this->car = new Car(); }
     
-    function addWheel() 
+    public function getVehicle(): Vehicle { return $this->car; }    
+    
+    function addWheel(): void
     {
         $this->car->setPart('right_wheel', new Wheel);
         $this->car->setPart('left_wheel', new Wheel);
     }
     
-    function addEngine() 
+    function addEngine(): void
     {
         $this->car->setPart('engine', new Engine);
     }
     
-    function addDoor() 
+    function addDoor(): void
     {
         $this->car->setPart('right_door', new Door);
         $this->car->setPart('left_door', new Door);
     }
-    
-    function getVehicle(): Vehicle
-    {
-        return $this->car;
-    }
 }
+
