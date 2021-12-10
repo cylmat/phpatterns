@@ -1,6 +1,6 @@
 <?php
-// Your code here!
-//register_shutdown_function('shutdownhandler');
+
+namespace Phpatterns\Behavior;
 
 function shutdownHandler() 
 {
@@ -27,7 +27,6 @@ trait StringFormatter {
 }
 
 $HtmlFormatter = function (string $string):string { return strtoupper($string); }; 
-//var_dump($HtmlFormatter);
 
 $mail = new class($HtmlFormatter) implements SplObserver
 {
@@ -50,4 +49,3 @@ $error->attach($mail);
 set_error_handler([$error, 'handler'], E_ALL);
 
 5/0;
-
