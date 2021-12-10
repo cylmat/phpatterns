@@ -1,9 +1,7 @@
 <?php
-// Your code here!
 
-/**
- * iteration of memento
- */
+namespace Phpatterns\Behavior;
+
 class ClientOriginator 
 {
     private $state = 'not started';
