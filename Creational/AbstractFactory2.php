@@ -1,5 +1,7 @@
 <?php
-// Your code here!
+
+namespace Phpatterns\Creational;
+
 /*
     cheese:goat,mozza,french
     sauce:tomato,pepper,mayo
