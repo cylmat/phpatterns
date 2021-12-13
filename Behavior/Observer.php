@@ -39,4 +39,4 @@ $error->attach($adminEmail)->attach($userEmail);
 
 $error->handle(38, 'Missing implementation');
 
-return false !== strpos('n° 38', $userEmail->txt);
+return false !== strpos($userEmail->txt, 'n° 38');
