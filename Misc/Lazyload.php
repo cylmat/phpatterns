@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Common ways of implementing lazyload design pattern
+ * lazy initialization; a virtual proxy; a ghost, and a value holder.
+ */
+
 namespace Phpatterns\Creational;
 
 // http://www.informatix.fr/articles/php/le-lazy-load-en-php-143
