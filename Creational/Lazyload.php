@@ -2,88 +2,67 @@
 
 namespace Phpatterns\Creational;
 
-/*
-http://www.informatix.fr/articles/php/le-lazy-load-en-php-143
-*/
-class Lazyload
+// http://www.informatix.fr/articles/php/le-lazy-load-en-php-143
+class LazyloadCommands
 {
-        protected $commandes = null;
-        protected $prenom = null;
+    public $data = [];
+    protected $commandes = null;
 
-        public function __construct()
-        {
-                $this->prenom = 'Nicolas';
-
-                /* L'attribut commandes utilise le lazy load car son initialisation est une operation lourde */
-                $this->commandes = function ()
-                {
-                        $model = new class() { function getCommands(){} };
-                        return $model->getCommands();
-                };
-        }
-
-        public function __get($key)
-        {
-                if (is_callable($this->$key))
-                {
-                        $this->$key = call_user_func($this->$key);
-                }
-
-                return $this->$key;
-        }
-}
-
-/*
-With BUILD
-*/
-class Client
-{
-        protected $commandes = null;
-        protected $adresses = null;
-
-        public function buildCommandes()
-        {
-                /* Operation tres couteuse */
-                echo "Et 5 tres longues secondes plus tard...";
-                sleep(5);
-                $this->commandes = array(
-                        'commande1' => 123456,
-                        'commande2' => 456789
-                );
-        }
-
-        public function __get($key)
-        {
-                if (is_null($this->$key))
-                {
-                        $method = 'build' . ucfirst($key);
-                        $this->$method();
-                }
-
-                return $this->$key;
-        }
-}
-
-/*
-2. https://verraes.net/2011/05/lazy-loading-with-closures/
-*/
-class CustomerRepository
-{
-    public function find($id)
+    public function getCommands()
     {
-        $db = $this->db;
-        $customerdata = $db->query(/* select customer ...*/);
-        $customer = new Customer($customerdata);
-
-        $ordersReference = function($customer) use($id, $db) {
-            $ordersdata = $db->query(/* select orders ... */);
-            $orders = array();
-            foreach($ordersdata as $orderdata) {
-                $orders[] = new Order($orderdata);
-            }
-            return $orders;
+        return function () { // defer loading
+            return 'Waiting...Get all commands'.PHP_EOL;
         };
-        $customer->setOrderReference($ordersReference);
+    }
+
+    public function buildCommandes() // load only once
+    {
+        if (null === $this->commands) {
+            $this->commandes = array(
+                'commande1' => 123456,
+                'commande2' => 456789
+            );
+        }
+        return $this->commands();
+    }
+}
+
+// 2. https://verraes.net/2011/05/lazy-loading-with-closures/
+class LazyCustomerRepository
+{
+    private $db = null;
+
+    public function __construct()
+    { 
+        $this->db = new class { 
+            function queryCustomers() {
+                return new class {
+                    private $data;
+                    function setOrder(callable $data) { $this->data = $data; }
+                    function getOrder(): callable { return $this->data; }
+                };
+            }
+            function queryOrders() { return ['order1', 'order2']; }
+        }; 
+    }
+
+    public function find()
+    {
+        $customer = $this->db->queryCustomers();
+        $ordersReference = function(string $customerId) {
+            return $this->db->queryOrders();
+        };
+
+        $customer->setOrder($ordersReference);
         return $customer;
     }
 }
+
+$allCommands = (new LazyloadCommands())->getCommands();
+// $allCommands();
+
+$allCustomers = (new LazyCustomerRepository())->find();
+$data = $allCustomers->getOrder();
+$order1 = $data('customerid')[0];
+
+echo (int)($order1 === 'order1');
