@@ -2,50 +2,41 @@
 
 namespace Phpatterns\Behavior;
 
-function shutdownHandler() 
-{
-    //echo 'error';
-}
-
-$error = new class() implements SplSubject
+class ErrorSubject implements \SplSubject // attach(obs), detach(obs), notify
 {
     private $obs = [];
     private $notice;
-    function attach(SplObserver $SplObserver) { $this->obs[] = $SplObserver;  }
-    function detach(SplObserver $SplObserver) {}
-    function notify() { foreach($this->obs as $obs){$obs->update($this);} }
     
-    function handler(int $errno, string $errstr, string $errfile, int $errline) { 
-        $this->notice = "Ceci EST l'erreur N0 $errstr";
+    function attach(\SplObserver $splObserver): self { $this->obs[] = $splObserver; return $this; }
+    function detach(\SplObserver $splObserver) { /** */ }
+    function notify() { foreach($this->obs as $obs){ $obs->update($this); } }
+    function getNotice() { return $this->notice; }
+
+    function handle(int $errno, string $msg)
+    { 
+        $this->notice = "Error n° $errno: $msg".PHP_EOL;
         $this->notify();
-    }
-    function getNotice() {return $this->notice;}
-}; 
-
-trait StringFormatter { 
-    function format(string $string):string { return strtolower($string); }
-}
-
-$HtmlFormatter = function (string $string):string { return strtoupper($string); }; 
-
-$mail = new class($HtmlFormatter) implements SplObserver
-{
-    private $formatter; use StringFormatter;
-    public $f;
-    public function __construct($format) { $this->formatter = $format; }
-    //use StringFormatter, HtmlFormatter { StringFormatter::format insteadof HtmlFormatter; StringFormatter::format as stringFormat; HtmlFormatter::format as htmlFormat; }
-    function update(SplSubject $SplSubject) { 
-        $f = $this->formatter; 
-        
-        if('string' == $this->f)
-            echo $f($SplSubject->getNotice());  //echo $this->format( $SplSubject->getNotice() ); }  
-        else
-            echo $this->format($SplSubject->getNotice());
     }
 };
 
-$mail->f = 'tring';
-$error->attach($mail);
-set_error_handler([$error, 'handler'], E_ALL);
+class EmailObserver implements \SplObserver // update(subject)
+{
+    public $txt;
+    private $type;
+    function __construct($type) { $this->type = $type; }
+    
+    function update(\SplSubject $splSubject): void
+    { 
+        $this->txt = $this->type.' type received '.$splSubject->getNotice().PHP_EOL;
+    }
+};
 
-5/0;
+$adminEmail = new EmailObserver('admin');
+$userEmail = new EmailObserver('user');
+
+$error = new ErrorSubject();
+$error->attach($adminEmail)->attach($userEmail);
+
+$error->handle(38, 'Missing implementation');
+
+return false !== strpos('n° 38', $userEmail->txt);
