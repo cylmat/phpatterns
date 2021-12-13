@@ -65,4 +65,4 @@ $allCustomers = (new LazyCustomerRepository())->find();
 $data = $allCustomers->getOrder();
 $order1 = $data('customerid')[0];
 
-echo (int)($order1 === 'order1');
+return $order1 === 'order1';
