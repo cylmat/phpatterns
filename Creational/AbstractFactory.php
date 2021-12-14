@@ -2,6 +2,7 @@
 
 /**
  * Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
+ * -> abstract factory is an object containing multiples factories in it
  */
 
 namespace Phpatterns\Creational;
