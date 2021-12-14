@@ -19,7 +19,8 @@ class Polygon implements IPolygon // object to be created
 class Triangle extends Polygon { protected $type = 'triangle'; }
 class Square extends Polygon { protected $type = 'square'; }
 
-abstract class PolygonFactory // Factory pattern
+// Factory pattern: need to be subclassed
+abstract class PolygonFactory 
 {
     public function create(IColor $color) {
         return $this->createPrototype($color);
@@ -36,7 +37,7 @@ class SquareFactory extends PolygonFactory {
 }
 
 /**
- * Abstract factory
+ * Abstract factory: Composition of factories methods
  */
 interface IPolygonAbstractFactory { 
     public function createTriangle(); 
