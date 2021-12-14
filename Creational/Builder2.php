@@ -2,14 +2,6 @@
 
 namespace Phpatterns\Creational;
 
-/**
- * computer:portable,desk,station
- *      locked:free
- *      keyboard:azerty,qwerty
- *      mouse:classic,adaptatic
- *      disk,usb,sd
- */
-
 interface BuilderInterface
 {
     public function addKeyboard(): void;
@@ -24,7 +16,6 @@ interface DirectorInterface
 
 class Computer
 {
-    /** @var string */
     protected $keyboard, $mouse, $storages = [];
 
     public function setKeyboard(bool $type = true) { $this->keyboard = $type ? 'azerty' : 'qwerty'; }
