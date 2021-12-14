@@ -3,6 +3,8 @@
 /**
  * Define an interface for creating an object, but let subclasses decide which class to instantiate.
  * -> factory is a method that can be overriden by subclasses
+ * 
+ * Abstract Factory is implemented by Composition; but Factory Method is implemented by Inheritance.
  */
 
 namespace Phpatterns\Creational;
