@@ -2,7 +2,7 @@
 
 /**
  * Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
- * -> abstract factory is an object containing multiples factories in it
+ * -> abstract factory is an object containing multiples factories in it ("factory of factories")
  * 
  * Abstract Factory is implemented by Composition; but Factory Method is implemented by Inheritance.
  */
