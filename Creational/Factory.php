@@ -2,6 +2,7 @@
 
 /**
  * Define an interface for creating an object, but let subclasses decide which class to instantiate.
+ * -> factory is a method that can be overriden by subclasses
  */
 
 namespace Phpatterns\Creational;
