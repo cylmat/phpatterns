@@ -1,32 +1,24 @@
 <?php
 
+/**
+ * Define an interface for creating an object, but let subclasses decide which class to instantiate.
+ */
+
 namespace Phpatterns\Creational;
 
-interface Parser
-{
-    public function parse(string $input): array;
-}
+interface ParserInterface { public function parse(string $input): array; }
 
-class CsvParser implements Parser
+interface ParserFactoryInterface { public function createParser(): ParserInterface; }
+
+class CsvParser implements ParserInterface
 {
-    const OPTION_CSV_HEADER = true;
-    const OPTION_CSV_NO_HEADER = false;
-    
-    private $option;
-    
-    function __construct(bool $option=CsvParser::OPTION_CSV_HEADER)
-    {
-        $this->option = $option;
-    }
-    
     function parse(string $input): array
     {
-        return ['csv'=>'parsed '.(string)$this->option];
+        return ['csv'=>'parsed'];
     }
 }
 
-
-class JsonParser implements Parser
+class JsonParser implements ParserInterface
 {
     function parse(string $input): array
     {
@@ -34,15 +26,22 @@ class JsonParser implements Parser
     }
 }
 
-class ParserFactory
+class CsvParserFactory implements ParserFactoryInterface
 {
-    function createCsvParser(bool $option=CsvParser::OPTION_CSV_HEADER): CsvParser
+    function createParser(): ParserInterface
     {
-        return new CsvParser($option);
+        return new CsvParser();
     }
-    
-    function createJsonParser(): JsonParser
+}
+
+class JsonParserFactory implements ParserFactoryInterface
+{
+    function createParser(): ParserInterface
     {
         return new JsonParser();
     }
 }
+
+$json = (new JsonParserFactory())->createParser();
+
+return $json instanceof JsonParser;
