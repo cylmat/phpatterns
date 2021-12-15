@@ -9,7 +9,7 @@ class Prototype
 
     public function __construct()
     {
-        echo 'only one creation...'.PHP_EOL;
+        // echo 'only one creation...'.PHP_EOL;
         $this->id = uniqId();
         $this->{'value'} = '9';
     }
