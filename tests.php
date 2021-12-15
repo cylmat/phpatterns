@@ -1,7 +1,7 @@
 <?php
 
 foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__)) as $file) {
-     if ('php' !== $file->getExtension() || 'tests.php' === $file->getFilename()) {
+     if ('php' !== $file->getExtension() || pathinfo(__FILE__)['basename'] === $file->getFilename()) {
          continue;    
      }
      echo $file->getRealpath();
