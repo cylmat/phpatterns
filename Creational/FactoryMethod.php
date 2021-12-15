@@ -4,16 +4,16 @@
  * Define an interface for creating an object, but let subclasses decide which class to instantiate.
  * -> factory is a method that can be overriden by subclasses
  * 
- * Abstract Factory is implemented by Composition; but Factory Method is implemented by Inheritance.
+ * Abstract Factory is implemented by Composition (of factory methods), when Factory Method is implemented by Inheritance.
  */
 
 namespace Phpatterns\Creational;
 
-interface ParserInterface { public function parse(string $input): array; }
+interface ParserObjectInterface { public function parse(string $input): array; }
 
-interface ParserFactoryInterface { public function createParser(): ParserInterface; }
+interface ParserFactoryInterface { public function createParser(): ParserObjectInterface; }
 
-class CsvParser implements ParserInterface
+class CsvParser implements ParserObjectInterface
 {
     function parse(string $input): array
     {
@@ -21,7 +21,7 @@ class CsvParser implements ParserInterface
     }
 }
 
-class JsonParser implements ParserInterface
+class JsonParser implements ParserObjectInterface
 {
     function parse(string $input): array
     {
@@ -31,7 +31,7 @@ class JsonParser implements ParserInterface
 
 class CsvParserFactory implements ParserFactoryInterface
 {
-    function createParser(): ParserInterface
+    function createParser(): ParserObjectInterface
     {
         return new CsvParser();
     }
@@ -39,7 +39,7 @@ class CsvParserFactory implements ParserFactoryInterface
 
 class JsonParserFactory implements ParserFactoryInterface
 {
-    function createParser(): ParserInterface
+    function createParser(): ParserObjectInterface
     {
         return new JsonParser();
     }
