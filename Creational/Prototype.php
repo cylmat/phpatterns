@@ -14,7 +14,7 @@ class Prototype
         $this->{'value'} = '9';
     }
     
-    public function __clone(): void
+    public function __clone()
     {
         // this will be the cloned object
         $this->id = uniqId('', true);
