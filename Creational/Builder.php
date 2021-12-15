@@ -99,4 +99,4 @@ class Director
 
 // main
 $vehicle = Director::buildVehicle(new CarBuilder());
-return $vehicle->getPart('right_wheel')->getType() === 'door';
+return 'wheel' === $vehicle->getPart('right_wheel')->getType();
