@@ -1,2 +1,2 @@
 # phpatterns
-Php design patterns
+Php design patterns samples
