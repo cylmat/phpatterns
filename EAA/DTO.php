@@ -5,6 +5,8 @@
  * 
  * It arries data between processes, 
  *  aggregates the data that would have been transferred by several calls
+ *
+ * @see https://martinfowler.com/eaaCatalog/dataTransferObject.html
  */
 
 final class RemoteServiceApi
