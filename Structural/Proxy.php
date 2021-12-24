@@ -27,11 +27,11 @@ class ProxyImage implements ImageLoader
     private $imageObject = null; 
     private $file;
     
-    public function __construct(ImageLoader $imageObject) { $this->imageObject = $imageObject; }
-    
     function displayImage(string $path): string
     {
         $sec = $this->securityLayer();
+        
+        $this->lazyInit();
         
         $file = 'Load from cache!';
         if (null === $this->file) {
@@ -40,13 +40,20 @@ class ProxyImage implements ImageLoader
         return $sec.$file;
     }
     
+    private function lazyInit(): void
+    {
+        if (null === $this->imageObject) {
+            $this->imageObject = new RealImage();
+        }
+    }
+    
     private function securityLayer(): string
     {
         return 'Checking security. ';
     }
 }
 
-$image = new ProxyImage(new RealImage());
+$image = new ProxyImage();
 $file_first = $image->displayImage('my/file/path.jpg');
 $file_next = $image->displayImage('my/file/path.jpg');
 
