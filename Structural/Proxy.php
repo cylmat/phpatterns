@@ -7,6 +7,8 @@
     - Virtual proxy : memory allocation when used
     - Access proxy: Add a security layer
     - Cache proxy
+    
+    @see Ocramius/ProxyManager
 */
 
 interface ImageLoader
