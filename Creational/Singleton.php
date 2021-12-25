@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * SingletonInterface: private __construct, static getInstance
+ */
+
 namespace Phpetterns\Creational;
 
 class Singleton
