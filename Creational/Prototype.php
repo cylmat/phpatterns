@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * PrototypeInterface: __clone
+ */
+
 namespace Phpatterns\Creational;
 
 class Prototype
