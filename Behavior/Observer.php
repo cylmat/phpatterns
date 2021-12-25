@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * An object, maintains a list of its dependents and notifies them automatically of any state changes
+ * 
+ * SubjectInterface: attach, detach, notify
+ * ObserverIneerface: update
+ */
+
 namespace Phpatterns\Behavior;
 
 class ErrorSubject implements \SplSubject // attach(obs), detach(obs), notify
