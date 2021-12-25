@@ -1,6 +1,14 @@
 <?php
 
-// Without violating encapsulation, capture and externalize an object’s internal state so that the object can be restored to this state later.
+/* 
+ * Without violating encapsulation, capture and externalize an object’s internal state so that the object can be restored to this state later.
+ * 
+ * CaretakerInterface
+ * OriginatorInterface
+ * MementoInterface
+ * 
+ * e.g. pseudo-random, finite state machine, "cancel" function
+ */
 
 namespace Phpatterns\Behavior;
 
