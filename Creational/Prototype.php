@@ -1,6 +1,8 @@
 <?php
 
 /*
+ * Avoid multiple heavy object creation
+ * 
  * PrototypeInterface: __clone
  */
 
