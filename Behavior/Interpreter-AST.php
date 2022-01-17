@@ -67,10 +67,10 @@ class StringExpression implements ExprInterface
     }
 }
 
-class IntegerExpression implements ExpressionInterface
+class IntegerExpression implements ExprInterface
 {
     private $expression;
-    public function __construct(TerminalExpression $expression)
+    public function __construct(FinalExpression $expression)
     {
         $this->expression = $expression;
     }
