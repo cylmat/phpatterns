@@ -6,18 +6,19 @@
  * ExpressionInterface: interpret(context)
  *   - NonTerminalExpression    -> maintain a child expressions container
  *   - TerminalExpression       -> interpret directly
+ * 
+ * Sample here convert a Pseudo-Sql request to other string (e.g. like a Regexp)
  */
 
 namespace Phpatterns\Behavior;
 
 interface ExpressionInterface { public function interpret(string $context): string; }
 
-// No logic for this sample
 class TerminalExpression implements ExpressionInterface
 {
     public function interpret(string $context): string
     {
-        return '['.$context.']';
+        return $context;
     }
 }
 
@@ -45,7 +46,7 @@ class FromOperatorExpression extends AbstractOperatorExpression
 {
     public function interpret(string $context): string
     {
-        return '.' . $this->terminalExpression->interpret($context);
+        return '\.' . $this->terminalExpression->interpret($context);
     }
 }
 
@@ -53,7 +54,7 @@ class WhereOperatorExpression extends AbstractOperatorExpression
 {
     public function interpret(string $context): string
     {
-        return '.' . $this->terminalExpression->interpret($context);
+        return ' [' . $this->terminalExpression->interpret($context) . ']+';
     }
 }
 
@@ -61,7 +62,7 @@ class LikeOperatorExpression extends AbstractOperatorExpression
 {
     public function interpret(string $context): string
     {
-        return '.' . $this->terminalExpression->interpret($context);
+        return str_replace(["'", '%'], ['', '.*'], $this->terminalExpression->interpret($context));
     }
 }
 
@@ -72,10 +73,9 @@ class SqlToRegexpClient
         $sqlExpressions = explode(' ', $sql);
         
         $regexp = '';
-        while (current($sqlExpressions)) {
-            $operatorValue = current($sqlExpressions);
+        while ($operatorValue = current($sqlExpressions)) {
             $exValue = next($sqlExpressions);
-            $expression = new TerminalExpression();
+            $expression = new TerminalExpression($exValue);
 
             switch ($operatorValue) {
                 case 'SELECT': 
@@ -103,6 +103,5 @@ class SqlToRegexpClient
 $sqlToRegexp = new SqlToRegexpClient();
 
 $sql = "SELECT user FROM file WHERE name LIKE 'alpha%'";
-$sqlToRegexp->parse($sql);
 
-return '@todo';
+return '/^user\.file [name]+alpha.*/' === $sqlToRegexp->parse($sql);
