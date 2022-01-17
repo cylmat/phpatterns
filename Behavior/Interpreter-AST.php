@@ -12,9 +12,9 @@
 
 namespace Phpatterns\Behavior;
 
-interface ExpressionInterface { public function interpret(string $context): string; }
+interface ExprInterface { public function interpret(string $context): string; }
 
-class TerminalExpression implements ExpressionInterface
+class FinalExpression implements ExprInterface
 {
     private $text;
     public function __construct(string $text)
@@ -54,7 +54,7 @@ class BodyExpression implements ExpressionInterface
 class StringExpression implements ExpressionInterface
 {
     private $expression;
-    public function __construct(TerminalExpression $expression)
+    public function __construct(ExpressionInterface $expression)
     {
         $this->expression = $expression;
     }
@@ -108,15 +108,12 @@ class YamlToJson
                     $stack->push(new IntegerExpression($stack->pop()));
                     break;
                 default:
-                    $stack->push(new TerminalExpression($token));
+                    $stack->push(new FinalExpression($token));
                     break;
             }
         }
         
         $expression = $stack->pop();
-        
-        // body string address integer 9876
-
         $json = $expression->interpret('');
 
         return $json;
