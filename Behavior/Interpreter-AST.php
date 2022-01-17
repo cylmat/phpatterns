@@ -28,11 +28,11 @@ class FinalExpression implements ExprInterface
     }
 }
 
-class BodyExpression implements ExpressionInterface
+class BodyExpression implements ExprInterface
 {
     private $children = [];
     
-    public function add(ExpressionInterface $expression)
+    public function add(ExprInterface $expression)
     {
         $this->children[] = $expression;
     }
@@ -51,10 +51,10 @@ class BodyExpression implements ExpressionInterface
     }
 }
 
-class StringExpression implements ExpressionInterface
+class StringExpression implements ExprInterface
 {
     private $expression;
-    public function __construct(ExpressionInterface $expression)
+    public function __construct(ExprInterface $expression)
     {
         $this->expression = $expression;
     }
