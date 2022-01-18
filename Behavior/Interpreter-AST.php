@@ -12,7 +12,7 @@
 
 namespace Phpatterns\Behavior;
 
-interface ExprInterface { public function interpret(string $context): string; }
+interface ExprInterface { public function interpret(array $context): string; }
 
 class FinalExpression implements ExprInterface
 {
@@ -22,9 +22,10 @@ class FinalExpression implements ExprInterface
         $this->text = $text;    
     }
     
-    public function interpret(string $context): string
+    public function interpret(array $context): string
     {
-        return $this->text;
+        $text = str_replace(array_keys($context), array_values($context), $this->text);
+        return $text;
     }
 }
 
@@ -37,7 +38,7 @@ class BodyExpression implements ExprInterface
         $this->children[] = $expression;
     }
     
-    public function interpret(string $context): string
+    public function interpret(array $context): string
     {
         $result = '';
         $size = \count($this->children);
@@ -59,7 +60,7 @@ class StringExpression implements ExprInterface
         $this->expression = $expression;
     }
 
-    public function interpret(string $context): string
+    public function interpret(array $context): string
     {
         $text = $this->expression->interpret($context);
         $size = strlen($text);
@@ -75,7 +76,7 @@ class IntegerExpression implements ExprInterface
         $this->expression = $expression;
     }
 
-    public function interpret(string $context): string
+    public function interpret(array $context): string
     {
         $text = $this->expression->interpret($context);
         $size = strlen($text);
@@ -114,7 +115,8 @@ class YamlToJson
         }
         
         $expression = $stack->pop();
-        $json = $expression->interpret('');
+        $context = ['%a%' => 'Postal', '%b%' => 'Try-it', '%c%' => 9876];
+        $json = $expression->interpret($context);
 
         return $json;
     }
@@ -123,11 +125,11 @@ class YamlToJson
 $yaml = <<<R
 body
 	text
-		Postal
+		%a%
 	text 
-	    Try-it
+		%b%
 	integer
-		9876
+		%c%
 R;
 
 $yamlToJson = new YamlToJson();
