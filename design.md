@@ -103,3 +103,7 @@ Other
 - https://refactoring.guru/design-patterns/php
 - https://designpatternsphp.readthedocs.io/en/latest/README.html
 - https://springframework.guru/gang-of-four-design-patterns/
+
+UML
+---
+**@ref**: https://www.uml-diagrams.org/class-reference.html
