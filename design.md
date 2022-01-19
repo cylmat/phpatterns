@@ -1,4 +1,7 @@
-[*** Creational ***]
+# Design Patterns
+
+Creational
+---
     Runtime
 Abstract factory: Provide an interface for creating familites of relate objects without specify their concrets classes
 Builder: Separate the construction of a complex object from its representation, the construction process create various representations. 
@@ -8,8 +11,9 @@ Prototype: Specify the kinds of objects to create using a prototypical instance,
 Factory: Define an interface for creating object, but let subclasses decide which class to instantiate. 
 Singleton: Ensure a class has only one instance, and provide a global point of access to it. 
 
-[*** Structural ***]
-[Interface]
+Structural
+---
+**Interface**  
 Adapter/Wrapper: Convert the interface of a class into another interface clients expect.
 Bridge: Decouple an abstraction from its implementation allowing the two to vary independently. 
 Facade: Provide a unified interface to a set of interfaces in a subsystem, makes the subsystem easier to use. 
@@ -21,7 +25,8 @@ Proxy: Provide a surrogate or placeholder for another object to control access t
 Composite: Compose objects into tree structures to represent part-whole hierarchies, treat individual and compositions of objects uniformly. 
 Flyweight: Use sharing to support large numbers of similar objects efficiently. 
 
-[*** Behavior ***]
+Behavior
+---
     Runtime
 Iterator: Provide a way to access the elements of an aggregate object sequentially without exposing its underlying representation. 
 State: Allow an object to alter its behavior when its internal state changes. The object will appear to change its class.
@@ -31,17 +36,18 @@ Visitor: Lets a new operation be defined without changing the classes of the ele
     Compile time
 Template: Template method lets subclasses redefine certain steps of an algorithm without changing the algorithm's structure. 
 
-[Collaboration]
+**Collaboration**  
 Ch o Rsp: Avoid coupling the sender of a request to its receiver by giving more than one object a chance to handle the request.
 Command: Encapsulate a request as an object, allowing queuing, logging or undoing of requests.
 Mediator: Define an object that encapsulates how a set of objects interact. Loose coupling by keeping objects from referring to each other. 
 Observer/Push-Sub: Define a one-to-many dependency between objects where a state change in one object results in all its dependents notified. 
 
-[State]
+**State**  
 Interpreter: Given a language, define a representation for its grammar using the representation to interpret sentences. 
 Memento: Without violating encapsulation, capture and externalize an object's internal state allowing the object to be restored to this state later. 
 
-[*** More ***]
+More
+---
 - Creational
 Dependency Injection: A class accepts the objects it requires from an injector instead of creating the objects directly. 
 Lazy initialization: Delaying the creation of expensive process until the first time it is needed. 
