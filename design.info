@@ -67,7 +67,20 @@ MVC: Used for developing user interfaces which divides the related program logic
     object persistence
 Active record: Architectural pattern found in software that stores in-memory object data in relational databases
 Data mapper: Data Access Layer that performs bidirectional transfer of data between a persistent data store and an in-memory data representation. 
-(Data access layer): Layer of a computer program which provides simplified access to data stored in persistent storage 
+(Data access layer): Layer of a computer program which provides simplified access to data stored in persistent storage   
+
+Other
+---
+    Pool: administrer une collection d'objets qui peuvent être recyclés.
+    Modèle de Seeheim
+    Mémoïsation
+    Post-redirect-get
+    Support d'initialisation à la demande
+    Signaux et slots
+    Désignation chaînée
+    Double-checked locking
+    MapReduce
+    Fonction de rappel
 
 ---
 @refs
