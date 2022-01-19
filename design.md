@@ -75,6 +75,13 @@ Active record: Architectural pattern found in software that stores in-memory obj
 Data mapper: Data Access Layer that performs bidirectional transfer of data between a persistent data store and an in-memory data representation. 
 (Data access layer): Layer of a computer program which provides simplified access to data stored in persistent storage   
 
+Concurency
+---
+**@ref**: https://en.wikipedia.org/wiki/Concurrency_pattern  
+
+    Reactor_pattern : Event handling pattern for handling service requests delivered concurrently to a service handler by one or more inputs.
+    Il est destiné à permettre le traitement événementiel dans un environnement concurrentiel, où les événements peuvent provenir de sources diverses.
+
 Other
 ---
     Pool: administrer une collection d'objets qui peuvent être recyclés.
