@@ -2,6 +2,7 @@
 
 - Active Record
 - Data Mapper
+- Data Gateway
 - Identity map
 - Unit of Work
 
