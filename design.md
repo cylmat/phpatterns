@@ -96,6 +96,9 @@ Other
     Fonction de rappel
 
 ---
+@see: https://github.com/DesignPatternsPHP/DesignPatternsPHP
+
+---
 @refs
 - https://www.tutorialspoint.com/design_pattern/index.htm (for diagrams)
 - https://en.wikipedia.org/wiki/Software_design_pattern
