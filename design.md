@@ -105,7 +105,8 @@ Other
 - https://martinfowler.com/eaaCatalog/index.html
 - https://refactoring.guru/design-patterns/php
 - https://designpatternsphp.readthedocs.io/en/latest/README.html
-- https://springframework.guru/gang-of-four-design-patterns/
+- https://springframework.guru/gang-of-four-design-patterns
+- https://www.oodesign.com
 
 UML
 ---
