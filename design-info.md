@@ -99,14 +99,15 @@ Other
 @see: https://github.com/DesignPatternsPHP/DesignPatternsPHP
 
 ---
-@refs
-- https://www.tutorialspoint.com/design_pattern/index.htm (for diagrams)
-- https://en.wikipedia.org/wiki/Software_design_pattern
-- https://martinfowler.com/eaaCatalog/index.html
-- https://refactoring.guru/design-patterns/php
-- https://designpatternsphp.readthedocs.io/en/latest/README.html
-- https://springframework.guru/gang-of-four-design-patterns
+## References
 - https://www.oodesign.com
+- https://refactoring.guru/design-patterns/php
+- https://martinfowler.com/eaaCatalog/index.html
+- https://en.wikipedia.org/wiki/Software_design_pattern
+- https://www.tutorialspoint.com/design_pattern/index.htm (for diagrams)
+- https://springframework.guru/gang-of-four-design-patterns
+- https://designpatternsphp.readthedocs.io/en/latest/README.html
+- https://programmer.group/twenty-three-classical-design-patterns-39-interpreter-patterns.html
 
 UML
 ---
