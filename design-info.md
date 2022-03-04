@@ -109,6 +109,9 @@ Other
 - https://designpatternsphp.readthedocs.io/en/latest/README.html
 - https://programmer.group/twenty-three-classical-design-patterns-39-interpreter-patterns.html
 
+## Anti-pattern
+* https://en.wikipedia.org/wiki/Anti-pattern
+
 UML
 ---
 **@ref**: https://www.uml-diagrams.org/class-reference.html
