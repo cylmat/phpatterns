@@ -107,6 +107,7 @@ Other
 - https://www.tutorialspoint.com/design_pattern/index.htm (for diagrams)
 - https://springframework.guru/gang-of-four-design-patterns
 - https://designpatternsphp.readthedocs.io/en/latest/README.html
+- https://www.journaldev.com/1827/java-design-patterns-example-tutorial
 - https://programmer.group/twenty-three-classical-design-patterns-39-interpreter-patterns.html
 
 ## Anti-pattern
