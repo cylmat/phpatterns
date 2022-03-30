@@ -100,5 +100,5 @@ $e .= $mediator->runOrder($truck);
 $e .= $mediator->stopOrder($airplane);
 $e .= $mediator->runOrder($truck);
 
-var_dump($e);
+var_dump($e, preg_match('/truck on the run/', $e));
 return preg_match('/truck on the run/', $e);
