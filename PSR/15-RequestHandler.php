@@ -39,18 +39,7 @@ class HttpHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $response = new Response();
-        $response->body = "Response displaying controller -" . $request->attributes['ctrl'] . '-';
-        
-        foreach (\array_key($request->attributes) as $key) {
-            switch ($key) {
-                case 'ctrl': 
-                    $response = (new ControllerActionMiddleWare)->process($request, $this);
-                    break;
-                case 'json':
-                    $response = (new ControllerActionMiddleWare)->process($request, $this);
-                    break;
-            }
-        }
+        $response->body = "Response displaying " . $request->attributes['ctrl'];
         
         return $response;
     }
@@ -61,8 +50,9 @@ class ControllerActionMiddleWare implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (\key_exists('ctrl', $request->attributes)) {
-            
         }
+        
+        return $handler->handle($request);
     }
 }
 
@@ -71,8 +61,9 @@ class JsonActionMiddleWare implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (\key_exists('json', $request->attributes)) {
-            $request->
         }
+        
+        return $handler->handle($request);
     }
 }
 
@@ -83,4 +74,4 @@ $httpRequest->attributes['ctrl'] = 'UserController';
 
 $httpHandler = new HttpHandler();
 $response = $httpHandler->handle($httpRequest);
-echo $response->body;
+return $response->body === 'Response displaying UserController';
