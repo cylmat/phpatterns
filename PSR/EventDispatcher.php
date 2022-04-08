@@ -26,23 +26,25 @@ interface StoppableEventInterface { public function isPropagationStopped(): bool
 class MyPreUserEvent implements StoppableEventInterface
 {
     public $data;
-    public function isPropagationStopped() { return false; } // not used for this demo
+    public function isPropagationStopped(): bool { return false; } // not used for this demo
 }
 
 // responsible for determining what Listeners are relevant for a given Event
-class ListenerProviderInterface implements ListenerProviderInterface
+class ListenerProvider implements ListenerProviderInterface
 { 
     private $listeners = [];
     public function getListenersForEvent(object $event): iterable
     {
-        foreach ($this->listeners as $eventName => $listeners) {
-            
+        if (\array_key_exists($name = get_class($event), $this->listeners)) {
+            return $this->listeners[$name];
         }
+
+        return [];
     }
     
-    public function addListener(string $eventName, callable $callable): self
+    public function addListener(StoppableEventInterface $event, callable $callable): self
     {
-        $this->listeners[$eventName][] = $callable;
+        $this->listeners[$event::class][] = $callable;
         return $this;
     }
 }
@@ -56,7 +58,7 @@ class Dispatcher implements EventDispatcherInterface
     public function dispatch(object $event)
     {
         foreach ($this->provider->getListenersForEvent($event) as $listener) {
-            $listener();
+            $listener($event);
         } 
     }
 }
@@ -64,21 +66,36 @@ class Dispatcher implements EventDispatcherInterface
 //  callable that expects to be passed an Event
 class MyUserListener
 {
-    public function __invoke(StoppableEventInterface $userEvent)
+    // Listener SHOULD have a void return
+    public function __invoke(StoppableEventInterface $userEvent): void
     {
-        return "I'm listening to ".$userEvent->data;
+        $userEvent->data = "I'm listening to " . $userEvent->data;
+    }
+}
+
+class MyUserListener2
+{
+    // Listener SHOULD have a void return
+    public function __invoke(StoppableEventInterface $userEvent): void
+    {
+        $userEvent->data = $userEvent->data . " on that way";
     }
 }
 
 /*
  * Usage
  */
-$event = new MyPreUserEvent();
-$event->data = "Mr John's user";
+$userEvent = new MyPreUserEvent();
+$userEvent->data = "Mr John's way";
+$userListener = new MyUserListener();
+$userListener2 = new MyUserListener2();
 
 $listenerProvider = (new ListenerProvider())
-    ->addListener(Event::class, new UserListener());
-$dispatcher = new EventDispatcher($listenerProvider);
+    ->addListener($userEvent, $userListener)
+    ->addListener($userEvent, $userListener2);
+$dispatcher = new Dispatcher($listenerProvider);
 
 // Emitter: arbitrary code that wishes to dispatch an Event (call the dispatcher)
-$dispatcher->dispatch(new MyPreUserEvent($user));
+$dispatcher->dispatch($userEvent);
+
+return $userEvent->data === "I'm listening to Mr John's way on that way";
