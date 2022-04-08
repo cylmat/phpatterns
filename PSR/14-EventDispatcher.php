@@ -1,5 +1,7 @@
 <?php
 
+namespace Phpatterns\Psr;
+
 /**
  * Event Dispatcher PSR-14
  * - Inject logic into an application easily
