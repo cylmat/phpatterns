@@ -74,4 +74,6 @@ $httpRequest->attributes['ctrl'] = 'UserController';
 
 $httpHandler = new HttpHandler();
 $response = $httpHandler->handle($httpRequest);
+
+return '0'; // todo
 return $response->body === 'Response displaying UserController';
