@@ -46,7 +46,7 @@ class ListenerProvider implements ListenerProviderInterface
     
     public function addListener(StoppableEventInterface $event, callable $callable): self
     {
-        $this->listeners[$event::class][] = $callable;
+        $this->listeners[get_class($event)][] = $callable;
         return $this;
     }
 }
