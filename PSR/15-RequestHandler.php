@@ -11,6 +11,8 @@ namespace Phpatterns\Psr;
  *   middleware
  * Handler
  * 
+ * Single-pass "lambda" method, only request is passed
+ * 
  * interface RequestHandlerInterface { public function handle(ServerRequestInterface $request): ResponseInterface; }
  * interface MiddlewareInterface { public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface; }
  */
@@ -19,7 +21,7 @@ interface ResponseInterface {} // PSR-7
 interface ServerRequestInterface {} // PSR-7
 // Handles a request and produces a response.
 interface RequestHandlerInterface { public function handle(ServerRequestInterface $request): ResponseInterface; }
-// acting on the request, generating the response, or forwarding the request to a middleware
+// acting on the request, updating the response, or forwarding the request to another middleware
 interface MiddlewareInterface { public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface; }
 
 class ServerRequest implements ServerRequestInterface
@@ -30,50 +32,58 @@ class ServerRequest implements ServerRequestInterface
 
 class Response implements ResponseInterface
 {
-    public $code = 404;
+    public $code = 200;
     public $body = '';
 }
 
 class HttpHandler implements RequestHandlerInterface
 {
+    private $stack = [];
+    public function __construct($stackMiddleware = [])
+    {
+        $this->stack = $stackMiddleware;
+    }
+    
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $response = new Response();
-        $response->body = "Response displaying " . $request->attributes['ctrl'];
+        $defaultResponse = new Response();
+
+        $middle = array_shift($this->stack);
+        $response = $middle ? $middle->process($request, $this) : $defaultResponse;
         
         return $response;
     }
 }
 
-class ControllerActionMiddleWare implements MiddlewareInterface
+class XmlHeaderActionMiddleWare implements MiddlewareInterface
 {
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if (\key_exists('ctrl', $request->attributes)) {
-        }
+        $response = $handler->handle($request);
+        $response->headers['HTTP-XML'] = 'script/xml';
         
-        return $handler->handle($request);
+        return $response;
     }
 }
 
-class JsonActionMiddleWare implements MiddlewareInterface
+class ContentHeaderActionMiddleWare implements MiddlewareInterface
 {
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if (\key_exists('json', $request->attributes)) {
-        }
+        $response = $handler->handle($request);
+        $response->headers['Content-Type'] = 'application/text';
         
-        return $handler->handle($request);
+        return $response;
     }
 }
 
 // use
 $httpRequest = new ServerRequest();
-$httpRequest->headers['XML'] = true;
-$httpRequest->attributes['ctrl'] = 'UserController';
-
-$httpHandler = new HttpHandler();
+$httpHandler = new HttpHandler([
+    new XmlHeaderActionMiddleWare(),
+    new ContentHeaderActionMiddleWare(),
+    // ...
+]);
 $response = $httpHandler->handle($httpRequest);
-
-return '0'; // todo
-return $response->body === 'Response displaying UserController';
+return 0; // todo
+return join(', ', $response->headers) === 'application/text, script/xml';
