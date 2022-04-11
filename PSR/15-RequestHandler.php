@@ -4,6 +4,7 @@ namespace Phpatterns\Psr;
 
 /**
  * PSR-15 common interfaces for HTTP server request handlers
+ * @see https://www.php-fig.org/psr/psr-15/meta/
  * 
  * Handler: application entrypoint, and inner-most handler to which the request is matched
  *   middleware
@@ -15,6 +16,8 @@ namespace Phpatterns\Psr;
  * 
  * interface RequestHandlerInterface { public function handle(ServerRequestInterface $request): ResponseInterface; }
  * interface MiddlewareInterface { public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface; }
+ * 
+ * @see https://docs.guzzlephp.org/en/latest/handlers-and-middleware.html
  */
  
 interface ResponseInterface {} // PSR-7
@@ -27,7 +30,6 @@ interface MiddlewareInterface { public function process(ServerRequestInterface $
 class ServerRequest implements ServerRequestInterface
 {
     public $headers = [];
-    public $attributes = [];
 }
 
 class Response implements ResponseInterface
@@ -48,30 +50,40 @@ class HttpHandler implements RequestHandlerInterface
     {
         $defaultResponse = new Response();
 
-        $middle = array_shift($this->stack);
+        $middle = array_pop($this->stack);
         $response = $middle ? $middle->process($request, $this) : $defaultResponse;
         
         return $response;
     }
 }
 
-class XmlHeaderActionMiddleWare implements MiddlewareInterface
+class XmlActionMiddleWare implements MiddlewareInterface
 {
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $response = $handler->handle($request);
-        $response->headers['HTTP-XML'] = 'script/xml';
+        
+        if ('application/pdf' === $request->headers['Type']) {
+            $response->body .= '<pdf>placeholder</pdf>';
+        } else {
+            $response->body .= '<body>placeholder</body>';
+        }
         
         return $response;
     }
 }
 
-class ContentHeaderActionMiddleWare implements MiddlewareInterface
+class ContentActionMiddleWare implements MiddlewareInterface
 {
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $response = $handler->handle($request);
-        $response->headers['Content-Type'] = 'application/text';
+        
+        if ('application/pdf' === $request->headers['Type']) {
+            $response->body = str_replace('placeholder', 'Reader content', $response->body);
+        } else {
+            $response->body = str_replace('placeholder', 'Website content html', $response->body);
+        }
         
         return $response;
     }
@@ -79,11 +91,13 @@ class ContentHeaderActionMiddleWare implements MiddlewareInterface
 
 // use
 $httpRequest = new ServerRequest();
+$httpRequest->headers['Type'] = 'application/pdf';
+
 $httpHandler = new HttpHandler([
-    new XmlHeaderActionMiddleWare(),
-    new ContentHeaderActionMiddleWare(),
+    new XmlActionMiddleWare(),
+    new ContentActionMiddleWare(),
     // ...
 ]);
 $response = $httpHandler->handle($httpRequest);
-return 0; // todo
-return join(', ', $response->headers) === 'application/text, script/xml';
+
+return $response->body === '<pdf>Reader content</pdf>';
