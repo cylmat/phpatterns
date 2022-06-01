@@ -2,10 +2,11 @@
 
 /*
  * Allow vary abstraction and implementation(s) independently
- * Have common with Adapter (two independents classes works together)
- *   when Bridge provides a stable interface to clients even as it lets you vary the classes that implement it
- * 
+ *
+ * - Have common with Adapter (two independents classes works together)
+ *     when Bridge provides a stable interface to clients even as it lets you vary the classes that implement it
  * - Adapter pattern makes things work after they're designed; Bridge makes them work before they are.
+ * - Bridge design is to compile-time when Strategy design is to run-time
  * 
  * e.g. 
  *   IAbstraction    -> UsedAbstraction1->operation()
