@@ -82,6 +82,10 @@ Concurency
     Reactor_pattern : Event handling pattern for handling service requests delivered concurrently to a service handler by one or more inputs.
     Il est destiné à permettre le traitement événementiel dans un environnement concurrentiel, où les événements peuvent provenir de sources diverses.
 
+EAA: Catalog of Patterns of Enterprise Application Architecture
+---
+https://martinfowler.com/eaaCatalog/index.html
+
 Other
 ---
     Pool: administrer une collection d'objets qui peuvent être recyclés.
@@ -102,7 +106,6 @@ Other
 ## References
 - https://www.oodesign.com
 - https://refactoring.guru/design-patterns/php
-- https://martinfowler.com/eaaCatalog/index.html
 - https://en.wikipedia.org/wiki/Software_design_pattern
 - https://www.tutorialspoint.com/design_pattern/index.htm (for diagrams)
 - https://springframework.guru/gang-of-four-design-patterns
