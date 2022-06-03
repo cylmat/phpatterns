@@ -3,4 +3,4 @@
   
 - Behevior: interpreter, mediator, memento, observer...
 - Creational: (a)factory, builder, prototype, singleton
-- Structural: adapter, bridge, composite, decorator, proxy
+- Structural: adapter, bridge, composite, decorator, facade, flyweight, proxy
