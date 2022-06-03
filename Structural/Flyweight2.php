@@ -1,18 +1,6 @@
 <?php
 
 /*
- * Flyweight: object that minimizes memory usage by sharing some of its data with other similar objects
- *  Intrinsic data: stored in the flyweight object, independent of the context, so sharable
- *  Extrinsic data: depends on the flyweight’s context (position, name, ...)
- *
- * This pattern can use a "Pool factory" pattern to create objects
- *
- * 2 versions: 
- * - One can use few "heavy" objects with intrinsic state and pass ("extrinsic") data in method arguments
- * - One can use multiple "light" objects with extrinsic data and pass ("shared") data in method or constructor
- */
-
-/*
  * Multiple light objects version
  */
 
