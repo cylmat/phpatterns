@@ -4,7 +4,7 @@
  * Multiple light objects version
  */
 
-interface Pixel
+interface Pixel2
 {
     function display(): string;
 }
@@ -26,7 +26,7 @@ class HeavyData
     }
 }
 
-class FlyweightPixel implements Pixel
+class FlyweightPixel implements Pixel2
 {
     private $sharedState;
     private $coordX; //extrinsic "individual" data
