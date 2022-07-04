@@ -84,7 +84,8 @@ Concurency
 
 EAA: Catalog of Patterns of Enterprise Application Architecture
 ---
-https://martinfowler.com/eaaCatalog/index.html
+https://martinfowler.com/eaaCatalog/index.html  
+https://martinfowler.com/eaaCatalog/serviceLayer.html  
 
 Other
 ---
