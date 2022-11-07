@@ -106,6 +106,7 @@ Other
 ---
 ## References
 - https://www.oodesign.com
+- https://sourcemaking.com/design_patterns
 - https://refactoring.guru/design-patterns/php
 - https://en.wikipedia.org/wiki/Software_design_pattern
 - https://www.tutorialspoint.com/design_pattern/index.htm (for diagrams)
